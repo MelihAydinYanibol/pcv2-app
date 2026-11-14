@@ -49,6 +49,9 @@ jobs:
           cat mock.log; exit 1
 
       - uses: android-actions/setup-android@v3
+        with:
+          # The default ("tools") no longer exists in the SDK repository
+          packages: "platform-tools platforms;android-35 build-tools;35.0.0"
 
       - uses: gradle/actions/setup-gradle@v4
 
