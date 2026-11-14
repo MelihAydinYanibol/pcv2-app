@@ -156,6 +156,19 @@ class ApiClient(base: OkHttpClient? = null) {
         }
     }
 
+    /**
+     * Sign-in with no password: works only when the server runs with
+     * AUTH_DISABLED=true (GET /api/auth/status answers without credentials).
+     */
+    suspend fun loginWithoutPassword(server: String): LoginResult = withContext(Dispatchers.IO) {
+        try {
+            if (verify(server, null, null)) LoginResult.Success(null)
+            else LoginResult.Failure(t("Enter the password."))
+        } catch (e: IOException) {
+            LoginResult.Failure(t("Cannot reach the server") + " (${e.message ?: e.javaClass.simpleName})")
+        }
+    }
+
     /** Token sign-in: the token itself is the credential, just check it works. */
     suspend fun loginWithToken(server: String, apiToken: String): LoginResult = withContext(Dispatchers.IO) {
         try {

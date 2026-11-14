@@ -429,5 +429,7 @@ val TR: Map<String, String> = mapOf(
     "Could not save the file" to "Dosya kaydedilemedi",
     "Could not read the file" to "Dosya okunamadı",
     "Language" to "Dil",
+    "Leave it empty if the server runs without sign-in (AUTH_DISABLED)." to "Sunucu girişsiz çalışıyorsa (AUTH_DISABLED) boş bırakın.",
+    "The server runs without sign-in (AUTH_DISABLED)." to "Sunucu girişsiz çalışıyor (AUTH_DISABLED).",
     "Server address" to "Sunucu adresi",
 )

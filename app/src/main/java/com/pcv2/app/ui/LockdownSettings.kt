@@ -287,7 +287,7 @@ fun SettingsScreen(vm: AppViewModel) {
         Hint(
             when (s.authMode) {
                 "token" -> t("with an API token")
-                "none" -> "AUTH_DISABLED"
+                "none" -> t("The server runs without sign-in (AUTH_DISABLED).")
                 else -> t("with the dashboard password")
             },
         )

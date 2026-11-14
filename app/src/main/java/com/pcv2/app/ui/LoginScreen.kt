@@ -107,7 +107,7 @@ fun LoginScreen(vm: AppViewModel) {
                     SegCtl(listOf("password" to t("Password"), "token" to t("API token")), mode, { mode = it; secret = ""; error = null })
                 }
                 Spacer(Modifier.height(14.dp))
-                Field(if (mode == "token") t("API token") else t("Password"), hint = if (mode == "token") t("Token from DASHBOARD_API_TOKEN in serverside/.env.") else null) {
+                Field(if (mode == "token") t("API token") else t("Password"), hint = if (mode == "token") t("Token from DASHBOARD_API_TOKEN in serverside/.env.") else t("Leave it empty if the server runs without sign-in (AUTH_DISABLED).")) {
                     Input(
                         secret, { secret = it.take(1024) },
                         Modifier.fillMaxWidth().semantics { contentType = ContentType.Password },

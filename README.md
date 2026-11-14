@@ -14,8 +14,9 @@ Turkish) and behaviour, built with Jetpack Compose.
 Everything the web dashboard does, using the same API calls:
 
 - **Sign in** with the dashboard password (same `POST /login` form, `pcv2_session` cookie,
-  lockout messages) or with `DASHBOARD_API_TOKEN` as a Bearer token. When a session
-  expires the app returns to the sign-in screen.
+  lockout messages) or with `DASHBOARD_API_TOKEN` as a Bearer token. If the server runs
+  with `AUTH_DISABLED=true`, leave the password empty. When a session expires the app
+  returns to the sign-in screen.
 - **Today**: live countdown of computer time left (overall limit, every exception and the
   next night lockdown), progress ring, "Counting down" / "Paused · PC offline" chips,
   one-tap **+15m / +30m / +1h**, at-a-glance panel, stats, activity timeline from

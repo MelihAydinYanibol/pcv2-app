@@ -73,6 +73,20 @@ class ApiIntegrationTest {
         assertEquals(200, tokenApi.call("GET", "/limits").status)
     }
 
+    @Test fun no_password_sign_in_only_when_the_server_allows_it() = runBlocking {
+        // Sign-in required: an empty password is refused
+        assertEquals(LoginResult.Failure("Enter the password."), ApiClient().loginWithoutPassword(url))
+        control("""{"action":"auth_disabled","value":true}""")
+        try {
+            assertEquals(LoginResult.Success(null), ApiClient().loginWithoutPassword(url))
+            // A typed password also works: POST /login just redirects, without a cookie
+            assertEquals(LoginResult.Success(null), ApiClient().loginWithPassword(url, "anything"))
+            assertEquals(200, ApiClient().apply { root = url }.call("GET", "/dashboard/data").status)
+        } finally {
+            control("""{"action":"auth_disabled","value":false}""")
+        }
+    }
+
     @Test fun dashboard_batch_parses() = runBlocking {
         val r = api.call("GET", "/dashboard/data")
         assertEquals(200, r.status)

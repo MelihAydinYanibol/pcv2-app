@@ -175,6 +175,29 @@ class ScreensTest {
         vm.onBackground()
     }
 
+    @Test fun server_without_sign_in_accepts_empty_password_and_sign_out_sticks() {
+        control("""{"action":"auth_disabled","value":true}""")
+        try {
+            val vm = AppViewModel(ctx.applicationContext as android.app.Application)
+            show(vm, false)
+            compose.onAllNodes(hasSetTextAction())[0].performTextReplacement(url)
+            compose.onNodeWithText("Sign in").performClick()
+            waitFor { vm.signedIn && vm.data != null && vm.source == Source.LIVE }
+            assertEquals("none", vm.settings.authMode)
+            // Still signed in after a restart
+            assertTrue(AppViewModel(ctx.applicationContext as android.app.Application).signedIn)
+            vm.tab = Tab.SETTINGS
+            shootRoot("60_settings_no_sign_in")
+            vm.signOut(wipe = true)
+            waitFor { !vm.signedIn }
+            vm.onBackground()
+            // ...but not after signing out
+            assertTrue(!AppViewModel(ctx.applicationContext as android.app.Application).signedIn)
+        } finally {
+            control("""{"action":"auth_disabled","value":false}""")
+        }
+    }
+
     @Test fun every_screen_light_dark_english_turkish() {
         for ((theme, lang) in listOf("light" to "en", "dark" to "en", "light" to "tr", "dark" to "tr")) {
             signInPrefs(theme, lang)

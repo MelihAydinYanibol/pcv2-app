@@ -250,12 +250,17 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         when {
             server.isEmpty() -> return onError(t("Enter the server address."))
             !Regex("^https?://", RegexOption.IGNORE_CASE).containsMatchIn(server) -> return onError(t("The address must start with http:// or https://"))
-            secret.isEmpty() -> return onError(if (mode == "token") t("Enter the API token.") else t("Enter the password."))
+            // An empty password is allowed: the server may run without sign-in (AUTH_DISABLED)
+            secret.isEmpty() && mode == "token" -> return onError(t("Enter the API token."))
         }
         loggingIn = true
         viewModelScope.launch {
             api.lang = I18n.lang
-            val r = if (mode == "token") api.loginWithToken(server, secret) else api.loginWithPassword(server, secret)
+            val r = when {
+                mode == "token" -> api.loginWithToken(server, secret)
+                secret.isEmpty() -> api.loginWithoutPassword(server)
+                else -> api.loginWithPassword(server, secret)
+            }
             loggingIn = false
             when (r) {
                 is LoginResult.Failure -> onError(r.message)
@@ -305,7 +310,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             nlEdit = null
             resetData(wipeBuffer = false)
             loginServer = settings.server
-            updateSettings(settings.copy(cookie = "", token = ""))
+            // "none" (no sign-in on the server) would sign straight back in on the next start
+            updateSettings(settings.copy(cookie = "", token = "", authMode = if (settings.authMode == "token") "token" else "password"))
             signedIn = false
             loginNotice = null
             tab = Tab.OVERVIEW
