@@ -111,10 +111,11 @@ class WidgetTest {
     }
 
     @Test fun pc_offline_shows_paused_and_cached_time() {
-        runBlocking { refreshedView() }
+        // One refresh per widget: Robolectric's RemoteViews.reapply fails on a second update.
+        // The mock filled its cache on reset, so the server answers from cache.
         control("""{"action":"online","value":false}""")
         try {
-            runBlocking { WidgetUpdater.refresh(ctx) }
+            refreshedView()
             val st = lastState()
             assertTrue(!st.live && !st.unreachable)
             val v = shot(st, 320, 160, "74_widget_pc_offline")
@@ -140,14 +141,17 @@ class WidgetTest {
         assertEquals("Time is up", text(v, R.id.w_big))
     }
 
-    @Test fun signed_out_and_unreachable() {
+    @Test fun signed_out() {
         ctx.getSharedPreferences("pcv2", Context.MODE_PRIVATE).edit().putString("cookie", "").commit()
-        var v = refreshedView()
+        val v = refreshedView()
         assertEquals("Sign-in required", text(v, R.id.w_sub))
+    }
+
+    @Test fun server_unreachable() {
         // A server that cannot be reached: falls back to the app's buffer (empty here)
         ctx.getSharedPreferences("pcv2", Context.MODE_PRIVATE).edit().putString("cookie", "x").putString("server", "http://127.0.0.1:9").commit()
-        runBlocking { WidgetUpdater.refresh(ctx) }
-        v = shot(lastState(), 260, 115, "77_widget_unreachable")
+        refreshedView()
+        val v = shot(lastState(), 260, 115, "77_widget_unreachable")
         assertEquals("Server unreachable", text(v, R.id.w_sub))
     }
 
