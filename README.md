@@ -39,6 +39,18 @@ Everything the web dashboard does, using the same API calls:
   is off you see the server's cached data with "last seen"; if the server itself is
   unreachable the app shows the phone's buffer. The app paints instantly from the buffer
   on start.
+- **Home-screen widget**: computer time left today, counting down live (it keeps
+  ticking without the app open), a status dot (green = live, amber = kid's PC off,
+  red = server unreachable), the progress bar and the apps closest to their limit. It
+  resizes from a one-line countdown up to a card with four apps, follows light/dark
+  mode and the app's language. **+** opens the app's exception sheet prefilled with
+  15 minutes (you still confirm), ↻ refreshes, tapping elsewhere opens the app. It
+  updates every 15 minutes in the background, right after the countdown ends, and
+  whenever the app is open.
+
+  ![Widget](docs/widget.png)
+
+  Add it with a long press on the home screen → *Widgets* → *Parental Controls*.
 - Mobile comforts: bottom navigation, dialogs as bottom sheets (swipe down to close),
   pull to refresh, swipeable toasts, back button steps back through tabs, light/dark
   status bar, edge-to-edge, Android password autofill.

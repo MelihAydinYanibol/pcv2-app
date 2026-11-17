@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Home-screen widget colours: the dashboard's light tokens (values-night has the dark ones) -->
+<resources>
+    <color name="w_surface">#FFFFFF</color>
+    <color name="w_border">#E3E6EC</color>
+    <color name="w_text">#1B1F29</color>
+    <color name="w_text2">#5B6272</color>
+    <color name="w_text3">#8A91A1</color>
+    <color name="w_accent">#4F5BD5</color>
+    <color name="w_accent_soft">#ECEEFD</color>
+    <color name="w_ok">#1F9D63</color>
+    <color name="w_warn">#C27C0E</color>
+    <color name="w_danger">#D64545</color>
+    <color name="w_track">#E9EBF1</color>
+</resources>

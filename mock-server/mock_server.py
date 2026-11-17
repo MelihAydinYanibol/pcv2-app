@@ -842,6 +842,8 @@ def mock_control():
             end = (now + timedelta(minutes=45)).strftime("%H:%M")
             PRIMARY["night_lockdown"] = {**default_night_lockdown(), "enabled": True,
                                          "all_days": {"blocked": [[start, end]], "whitelist": []}}
+        elif action == "lockdown_off":
+            PRIMARY["night_lockdown"]["enabled"] = False
         elif action == "lockdown_soon":
             now = datetime.now()
             start = (now + timedelta(minutes=10)).strftime("%H:%M")
@@ -883,7 +885,7 @@ code{font-size:.85rem}.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12
  <div class="card"><h2>Scenarios</h2>
    <button data-a="reset">Reset sample data</button><button data-a="empty">Empty config</button>
    <button data-a="time_up">Overall time almost up</button><button data-a="lockdown_now">Lockdown active now</button>
-   <button data-a="lockdown_soon">Lockdown in 10 min</button><button data-a="queue_samples">Add queued changes</button></div>
+   <button data-a="lockdown_soon">Lockdown in 10 min</button><button data-a="lockdown_off">Lockdown off</button><button data-a="queue_samples">Add queued changes</button></div>
  <div class="card"><h2>Server</h2><div id="fail"></div><div id="lat"></div>
    <button data-a="expire_sessions">Expire all sign-ins</button><button data-a="unlock_login">Clear login lockout</button><div id="auth"></div></div>
 </div>

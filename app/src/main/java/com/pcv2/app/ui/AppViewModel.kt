@@ -50,6 +50,7 @@ import com.pcv2.app.data.Sample
 import com.pcv2.app.data.Settings
 import com.pcv2.app.data.normalizeServer
 import com.pcv2.app.data.seg
+import com.pcv2.app.widget.WidgetUpdater
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -293,6 +294,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         sheet = null
         confirmReq?.result?.complete(false)
         loginNotice = t("Your sign-in has expired. Please sign in again.")
+        runCatching { WidgetUpdater.pushSignedOut(getApplication()) }
         loginServer = settings.server
         updateSettings(settings.copy(cookie = ""))
         pollJob?.cancel()
@@ -315,6 +317,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             signedIn = false
             loginNotice = null
             tab = Tab.OVERVIEW
+            runCatching { WidgetUpdater.pushSignedOut(getApplication()) }
         }
     }
 
@@ -433,6 +436,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         excCache.remove(date)
         persistBuffer()
         maybeSample(date, usage, src)
+        runCatching { WidgetUpdater.push(getApplication(), d, src == Source.LIVE, lastSeenMs()) }
     }
 
     private fun fallbackToBuffer(err: String?) {

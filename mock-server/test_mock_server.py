@@ -180,5 +180,7 @@ def test_mock_control(client):
     assert r.get_json()["data"]["online"] is False
     client.post("/mock/control", json={"action": "lockdown_now"})
     assert ms.lockdown_active(ms.PRIMARY["night_lockdown"])
+    client.post("/mock/control", json={"action": "lockdown_off"})
+    assert not ms.lockdown_active(ms.PRIMARY["night_lockdown"])
     client.post("/mock/control", json={"action": "expire_sessions"})
     assert client.post("/mock/control", json={"action": "nope"}).status_code == 400

@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Ebeveyn Denetimi</string>
+    <string name="widget_label">Kalan bilgisayar süresi</string>
+    <string name="widget_description">Bugün kalan bilgisayar süresi, canlı geri sayım</string>
+    <string name="widget_refresh">Şimdi yenile</string>
+    <string name="widget_add">İstisna ekle</string>
 </resources>

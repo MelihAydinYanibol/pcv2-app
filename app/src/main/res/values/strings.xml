@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Parental Controls</string>
+    <string name="widget_label">Computer time left</string>
+    <string name="widget_description">Computer time left today, counting down live</string>
+    <string name="widget_refresh">Refresh now</string>
+    <string name="widget_add">Add an exception</string>
 </resources>
