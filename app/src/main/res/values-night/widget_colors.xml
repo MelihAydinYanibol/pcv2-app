@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="w_surface">#171A22</color>
+    <color name="w_border">#2A2F3B</color>
+    <color name="w_text">#E8EAF0</color>
+    <color name="w_text2">#A5ABBA</color>
+    <color name="w_text3">#747B8C</color>
+    <color name="w_accent">#7C86F0</color>
+    <color name="w_accent_soft">#252A4A</color>
+    <color name="w_ok">#3CCF8E</color>
+    <color name="w_warn">#F0B04A</color>
+    <color name="w_danger">#F07070</color>
+    <color name="w_track">#262B36</color>
+</resources>
